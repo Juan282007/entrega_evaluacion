@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: aerolinea_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: midb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5435:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  liquibase:
+    image: liquibase/liquibase:latest
+    container_name: aerolinea_liquibase
+    depends_on:
+      - postgres
+    volumes:
+      - ../liquibase:/liquibase/changelog
+    command: >
+      --driver=org.postgresql.Driver
+      --url=jdbc:postgresql://postgres:5432/midb
+      --username=admin
+      --password=123456
+      --changeLogFile=changelog-master.xml
+      update
+
+volumes:
+  postgres_data:
