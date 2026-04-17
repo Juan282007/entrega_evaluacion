@@ -1,16 +1,1 @@
-databaseChangeLog:
-  - changeSet:
-      id: 1a2b3c4d-0001-4a1b-8c1d-000000000013
-      author: Juan282007
-      labels: "HU-02-dev,ddl,indexes"
-      comment: Creates all indexes for the model.
-      changes:
-        - sqlFile:
-            path: create-indexes.sql
-            relativeToChangelogFile: true
-            stripComments: false
-      rollback:
-        - sqlFile:
-            path: ../../../05_rollbacks/01_ddl/09_indexes/rollback-indexes.sql
-            relativeToChangelogFile: true
-            stripComments: false
+databaseChangeLog: []

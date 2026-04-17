@@ -1,13 +1,1 @@
-databaseChangeLog:
-  - changeSet:
-      id: 1a2b3c4d-0001-4a1b-8c1d-000000000000
-      author: Juan282007
-      labels: "HU-02-dev,ddl,extensions"
-      comment: Enables pgcrypto extension for UUID generation.
-      changes:
-        - sqlFile:
-            path: create-extension-pgcrypto.sql
-            relativeToChangelogFile: true
-            stripComments: false
-      rollback:
-        - sql: DROP EXTENSION IF EXISTS pgcrypto;
+databaseChangeLog: []
