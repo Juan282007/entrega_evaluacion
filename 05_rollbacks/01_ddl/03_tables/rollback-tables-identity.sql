@@ -1,0 +1,10 @@
+-- ============================================
+-- ROLLBACK IDENTITY
+-- ============================================
+
+DROP TABLE IF EXISTS person_contact CASCADE;
+DROP TABLE IF EXISTS person_document CASCADE;
+DROP TABLE IF EXISTS person CASCADE;
+DROP TABLE IF EXISTS contact_type CASCADE;
+DROP TABLE IF EXISTS document_type CASCADE;
+DROP TABLE IF EXISTS person_type CASCADE;

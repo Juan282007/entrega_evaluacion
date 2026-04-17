@@ -1,25 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<databaseChangeLog
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
-
-    <!-- Extensión base -->
-    <include file="db/changelog/000-init/001-extensions.xml"/>
-
-    <!-- Dominios funcionales -->
-    <include file="db/changelog/001-geography/001-geography.xml"/>
-    <include file="db/changelog/002-airline/001-airline.xml"/>
-    <include file="db/changelog/003-identity/001-identity.xml"/>
-    <include file="db/changelog/004-security/001-security.xml"/>
-    <include file="db/changelog/005-customer-loyalty/001-customer-loyalty.xml"/>
-    <include file="db/changelog/006-airport/001-airport.xml"/>
-    <include file="db/changelog/007-aircraft/001-aircraft.xml"/>
-    <include file="db/changelog/008-flight-operations/001-flight-operations.xml"/>
-    <include file="db/changelog/009-sales/001-sales.xml"/>
-    <include file="db/changelog/010-boarding/001-boarding.xml"/>
-    <include file="db/changelog/011-payment/001-payment.xml"/>
-    <include file="db/changelog/012-billing/001-billing.xml"/>
-
-</databaseChangeLog>
+databaseChangeLog:
+  - include:
+      file: 01_ddl/changelog.yaml
+      relativeToChangelogFile: true
+      contextFilter: 01_ddl
+      labels: 01_ddl
+  - include:
+      file: 02_dml/changelog.yaml
+      relativeToChangelogFile: true
+      contextFilter: 02_dml
+      labels: 02_dml
+  - include:
+      file: 03_dcl/changelog.yaml
+      relativeToChangelogFile: true
+      contextFilter: 03_dcl
+      labels: 03_dcl
+  - include:
+      file: 04_tcl/changelog.yaml
+      relativeToChangelogFile: true
+      contextFilter: 04_tcl
+      labels: 04_tcl
