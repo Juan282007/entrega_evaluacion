@@ -1,1 +1,48 @@
-databaseChangeLog: []
+databaseChangeLog:
+  - changeSet:
+      id: d575968c-9d6a-45ac-ad95-2278cc0e24c8
+      author: Juan282007
+      labels: "HU-04-dev,dml,security,roles"
+      comment: Inserts security roles into security_role table.
+      changes:
+        - sqlFile:
+            path: insert-security-roles.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/02_dml/00_inserts/rollback-insert-security-roles.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: 89a44ec1-6988-4532-9f14-cd2878006e71
+      author: Juan282007
+      labels: "HU-04-dev,dml,security,permissions"
+      comment: Inserts security permissions into security_permission table.
+      changes:
+        - sqlFile:
+            path: insert-security-permissions.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/02_dml/00_inserts/rollback-insert-security-permissions.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: a7fcb6d5-d3de-4efb-a122-f19f9196702c
+      author: Juan282007
+      labels: "HU-04-dev,dml,security,role-permissions"
+      comment: Assigns permissions to roles in role_permission table.
+      changes:
+        - sqlFile:
+            path: insert-role-permissions.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/02_dml/00_inserts/rollback-insert-role-permissions.sql
+            relativeToChangelogFile: true
+            stripComments: false

@@ -14,6 +14,7 @@ services:
       --username=${POSTGRES_USER}
       --password=${POSTGRES_PASSWORD}
       --changeLogFile=changelog-master.yaml
+      --contexts=01_ddl,02_dml,03_dcl,04_tcl
       update
 
 volumes:
