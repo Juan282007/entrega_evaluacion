@@ -9,3 +9,8 @@ databaseChangeLog:
       relativeToChangelogFile: true
       contextFilter: 04_tcl
       labels: 01_manual_recoveries
+  - include:
+      file: 02_release_tags/changelog.yaml
+      relativeToChangelogFile: true
+      contextFilter: 04_tcl
+      labels: 02_release_tags
