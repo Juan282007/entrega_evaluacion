@@ -1,314 +1,175 @@
 # Análisis de Dominios Funcionales
 
-## Objetivo del análisis
-
-El objetivo de este documento es identificar y describir los dominios funcionales del modelo de base de datos `modelo_postgresql.sql`, con el fin de comprender su arquitectura, organización lógica y relaciones principales.
-
-El sistema corresponde a una plataforma de gestión de aerolínea que integra procesos geográficos, operacionales, comerciales, financieros y de seguridad.
-
----
-
-# 1. Dominio: Geografía y datos de referencia
-
-## Propósito
-Gestionar la estructura geográfica global y estandarizar ubicaciones dentro del sistema.
-
-## Entidades
-- continent  
-- country  
-- state_province  
-- city  
-- district  
-- address  
-- time_zone  
-- currency  
-
-## Relaciones clave
-- country pertenece a continent  
-- state_province pertenece a country  
-- city pertenece a state_province  
-- district pertenece a city  
-- address pertenece a district  
-- city se relaciona con time_zone  
-
-## Importancia
-Este dominio es transversal, ya que soporta la ubicación de aeropuertos, personas, proveedores y operaciones.
+## Descripción General
+El modelo de base de datos representa un sistema de aerolínea compuesto por 12 dominios 
+funcionales organizados de forma independiente pero relacionados entre sí. El modelo usa 
+UUID como clave primaria en todas las entidades, campos de auditoría `created_at` y 
+`updated_at` en todas las tablas, restricciones CHECK para validaciones de negocio e 
+índices de apoyo para optimización de consultas.
 
 ---
 
-# 2. Dominio: Aerolínea
+## Dominios Funcionales
 
-## Propósito
-Representar la entidad principal del negocio aéreo.
+### 1. Geografía y Datos de Referencia
+**Tablas:** time_zone, continent, country, state_province, city, district, address, currency
 
-## Entidades
-- airline  
+**Descripción:** Base geográfica del sistema. Provee la estructura jerárquica de ubicaciones 
+desde continente hasta dirección física. La tabla `currency` también hace parte de este 
+dominio como dato de referencia global.
 
-## Relaciones
-- airline se asocia a country (home_country_id)
-
-## Importancia
-Es el núcleo organizacional del sistema.
-
----
-
-# 3. Dominio: Identidad
-
-## Propósito
-Gestionar personas, documentos y contactos.
-
-## Entidades
-- person  
-- person_type  
-- person_document  
-- person_contact  
-- document_type  
-- contact_type  
-
-## Relaciones
-- person pertenece a person_type  
-- person puede tener múltiples documentos y contactos  
-- person_document depende de document_type  
-- person_contact depende de contact_type  
-
-## Importancia
-Es base para clientes, usuarios y pasajeros del sistema.
+**Relaciones clave:**
+- continent → country → state_province → city → district → address
+- time_zone se asocia a city
+- currency es referenciada por loyalty_program, fare, sale, payment e invoice
 
 ---
 
-# 4. Dominio: Seguridad
+### 2. Aerolínea
+**Tablas:** airline
 
-## Propósito
-Gestionar usuarios, roles y permisos.
+**Descripción:** Entidad central del sistema. Representa la aerolínea operadora y es 
+referenciada por la mayoría de los dominios como punto de partida del modelo.
 
-## Entidades
-- user_account  
-- user_status  
-- security_role  
-- security_permission  
-- user_role  
-- role_permission  
-
-## Relaciones
-- user_account se relaciona con person  
-- user_role asigna roles a usuarios  
-- role_permission asigna permisos a roles  
-
-## Importancia
-Garantiza control de acceso y trazabilidad del sistema.
+**Relaciones clave:**
+- airline → aircraft, flight, customer, loyalty_program, fare
 
 ---
 
-# 5. Dominio: Clientes y fidelización
+### 3. Identidad
+**Tablas:** person_type, document_type, contact_type, person, person_document, person_contact
 
-## Propósito
-Gestionar clientes y programas de lealtad.
+**Descripción:** Gestiona la identidad de todas las personas del sistema, tanto pasajeros 
+como empleados. Centraliza documentos y datos de contacto evitando duplicidad.
 
-## Entidades
-- customer  
-- customer_category  
-- loyalty_program  
-- loyalty_account  
-- loyalty_tier  
-- loyalty_account_tier  
-- miles_transaction  
-- benefit_type  
-- customer_benefit  
-
-## Relaciones
-- customer se relaciona con person  
-- loyalty_account conecta customer con loyalty_program  
-- loyalty_tier define niveles del programa  
-- miles_transaction registra acumulación o redención de millas  
-
-## Importancia
-Permite fidelización y retención de clientes.
+**Relaciones clave:**
+- person → person_document, person_contact
+- person → user_account, customer, reservation_passenger
 
 ---
 
-# 6. Dominio: Aeropuertos
+### 4. Seguridad
+**Tablas:** user_status, security_role, security_permission, user_account, user_role, role_permission
 
-## Propósito
-Gestionar infraestructura aeroportuaria.
+**Descripción:** Controla el acceso al sistema mediante un modelo RBAC. Cada usuario tiene 
+roles asignados y cada rol tiene permisos específicos por operación.
 
-## Entidades
-- airport  
-- terminal  
-- boarding_gate  
-- runway  
-- airport_regulation  
-
-## Relaciones
-- airport depende de address  
-- terminal pertenece a airport  
-- boarding_gate pertenece a terminal  
-
-## Importancia
-Soporta todas las operaciones de vuelo.
+**Relaciones clave:**
+- person → user_account → user_role → security_role → role_permission → security_permission
 
 ---
 
-# 7. Dominio: Aeronaves y mantenimiento
+### 5. Clientes y Fidelización
+**Tablas:** customer_category, benefit_type, loyalty_program, loyalty_tier, customer, 
+loyalty_account, loyalty_account_tier, miles_transaction, customer_benefit
 
-## Propósito
-Gestionar la flota aérea y su mantenimiento.
+**Descripción:** Gestiona el ciclo de vida del cliente y su participación en programas 
+de fidelización. Permite acumular y redimir millas, asignar niveles y otorgar beneficios.
 
-## Entidades
-- aircraft  
-- aircraft_model  
-- aircraft_manufacturer  
-- aircraft_cabin  
-- aircraft_seat  
-- cabin_class  
-- maintenance_provider  
-- maintenance_type  
-- maintenance_event  
-
-## Relaciones
-- aircraft pertenece a airline  
-- aircraft_model pertenece a aircraft_manufacturer  
-- maintenance_event se relaciona con aircraft  
-
-## Importancia
-Permite control operativo y técnico de la flota.
+**Relaciones clave:**
+- airline + person → customer → loyalty_account → loyalty_program → loyalty_tier
+- loyalty_account → miles_transaction, loyalty_account_tier
 
 ---
 
-# 8. Dominio: Operaciones de vuelo
+### 6. Aeropuerto
+**Tablas:** airport, terminal, boarding_gate, runway, airport_regulation
 
-## Propósito
-Gestionar vuelos y su ejecución.
+**Descripción:** Representa la infraestructura física de los aeropuertos. Incluye terminales, 
+puertas de abordaje, pistas y regulaciones vigentes.
 
-## Entidades
-- flight  
-- flight_segment  
-- flight_status  
-- flight_delay  
-- delay_reason_type  
-
-## Relaciones
-- flight contiene flight_segment  
-- flight_segment conecta aeropuertos origen/destino  
-- flight_delay se asocia a flight_segment  
-
-## Importancia
-Es el núcleo operativo del sistema aéreo.
+**Relaciones clave:**
+- address → airport → terminal → boarding_gate
+- airport → runway, airport_regulation
 
 ---
 
-# 9. Dominio: Reservas, ventas y ticketing
+### 7. Aeronaves
+**Tablas:** aircraft_manufacturer, aircraft_model, cabin_class, aircraft, aircraft_cabin, 
+aircraft_seat, maintenance_provider, maintenance_type, maintenance_event
 
-## Propósito
-Gestionar el flujo comercial completo.
+**Descripción:** Gestiona el inventario de aeronaves, su configuración de cabinas y asientos, 
+y el historial de mantenimiento.
 
-## Entidades
-- reservation  
-- reservation_status  
-- reservation_passenger  
-- sale  
-- sale_channel  
-- fare  
-- fare_class  
-- ticket  
-- ticket_status  
-- ticket_segment  
-- seat_assignment  
-- baggage  
-
-## Relaciones
-- reservation genera sale  
-- sale genera ticket  
-- ticket se asocia a pasajeros y segmentos de vuelo  
-- seat_assignment asigna asiento a ticket_segment  
-
-## Importancia
-Representa el flujo principal de ingresos.
+**Relaciones clave:**
+- aircraft_manufacturer → aircraft_model → aircraft → aircraft_cabin → aircraft_seat
+- aircraft → maintenance_event → maintenance_type, maintenance_provider
 
 ---
 
-# 10. Dominio: Check-in y abordaje
+### 8. Operaciones de Vuelo
+**Tablas:** flight_status, delay_reason_type, flight, flight_segment, flight_delay
 
-## Propósito
-Gestionar el proceso aeroportuario del pasajero.
+**Descripción:** Registra los vuelos operados, sus segmentos con origen y destino, 
+tiempos programados y reales, y los retrasos con su causa.
 
-## Entidades
-- check_in  
-- check_in_status  
-- boarding_pass  
-- boarding_group  
-- boarding_validation  
-
-## Relaciones
-- check_in genera boarding_pass  
-- boarding_pass es validado en boarding_gate  
-- boarding_group organiza embarque  
-
-## Importancia
-Controla el acceso al vuelo.
+**Relaciones clave:**
+- airline + aircraft → flight → flight_segment → airport
+- flight_segment → flight_delay → delay_reason_type
 
 ---
 
-# 11. Dominio: Pagos
+### 9. Ventas y Reservas
+**Tablas:** reservation_status, sale_channel, fare_class, fare, ticket_status, reservation, 
+reservation_passenger, sale, ticket, ticket_segment, seat_assignment, baggage
 
-## Propósito
-Gestionar transacciones financieras.
+**Descripción:** Dominio central del flujo comercial. Gestiona desde la reserva hasta la 
+emisión del tiquete, asignación de asiento y registro de equipaje.
 
-## Entidades
-- payment  
-- payment_status  
-- payment_method  
-- payment_transaction  
-- refund  
-
-## Relaciones
-- payment se asocia a sale  
-- payment_transaction registra movimientos  
-- refund gestiona devoluciones  
-
-## Importancia
-Control financiero del sistema.
+**Relaciones clave:**
+- customer → reservation → reservation_passenger → ticket → ticket_segment → flight_segment
+- ticket_segment → seat_assignment → aircraft_seat
+- ticket_segment → baggage
 
 ---
 
-# 12. Dominio: Facturación
+### 10. Abordaje
+**Tablas:** boarding_group, check_in_status, check_in, boarding_pass, boarding_validation
 
-## Propósito
-Gestionar facturación e impuestos.
+**Descripción:** Gestiona el proceso de check-in y abordaje del pasajero. Genera el 
+pase de abordar y registra su validación en la puerta.
 
-## Entidades
-- invoice  
-- invoice_line  
-- invoice_status  
-- tax  
-- exchange_rate  
-
-## Relaciones
-- invoice se genera desde sale  
-- invoice_line detalla la factura  
-- tax se aplica a líneas de factura  
-
-## Importancia
-Cumplimiento fiscal y contable.
+**Relaciones clave:**
+- ticket_segment → check_in → boarding_pass → boarding_validation → boarding_gate
 
 ---
 
-# Conclusión general
+### 11. Pagos
+**Tablas:** payment_status, payment_method, payment, payment_transaction, refund
 
-El modelo presenta una arquitectura:
+**Descripción:** Registra los pagos asociados a ventas, sus transacciones con el proveedor 
+de pagos y los reembolsos procesados.
 
-- Altamente normalizada (3FN)
-- Organizada por dominios funcionales
-- Escalable y mantenible
-- Preparada para implementación con Liquibase y Docker
-- Compatible con enfoque de arquitectura DDD
+**Relaciones clave:**
+- sale → payment → payment_transaction
+- payment → refund
 
 ---
 
-# Valor del análisis
+### 12. Facturación
+**Tablas:** tax, exchange_rate, invoice_status, invoice, invoice_line
 
-Este análisis demuestra:
+**Descripción:** Gestiona la facturación de las ventas. Incluye tasas de impuestos, 
+tipos de cambio de moneda y el detalle de cada línea facturable.
 
-- Comprensión del modelo de datos
-- Capacidad de diseño arquitectónico
-- Identificación de dominios empresariales
-- Preparación para despliegue y versionamiento
+**Relaciones clave:**
+- sale → invoice → invoice_line → tax
+- currency → exchange_rate
+
+---
+
+## Dependencias entre Dominios
+
+| Dominio | Depende de |
+|---------|-----------|
+| Aerolínea | Geografía |
+| Identidad | Geografía |
+| Seguridad | Identidad |
+| Clientes | Aerolínea, Identidad |
+| Aeropuerto | Geografía |
+| Aeronaves | Aerolínea |
+| Vuelos | Aerolínea, Aeronaves, Aeropuerto |
+| Ventas | Clientes, Vuelos, Aeronaves |
+| Abordaje | Ventas, Aeropuerto, Seguridad |
+| Pagos | Ventas, Geografía |
+| Facturación | Ventas, Geografía |
