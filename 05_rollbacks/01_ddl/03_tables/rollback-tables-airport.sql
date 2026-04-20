@@ -1,0 +1,9 @@
+-- ============================================
+-- ROLLBACK AIRPORT
+-- ============================================
+
+DROP TABLE IF EXISTS airport_regulation CASCADE;
+DROP TABLE IF EXISTS runway CASCADE;
+DROP TABLE IF EXISTS boarding_gate CASCADE;
+DROP TABLE IF EXISTS terminal CASCADE;
+DROP TABLE IF EXISTS airport CASCADE;
