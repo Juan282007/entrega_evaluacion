@@ -1,0 +1,9 @@
+-- ============================================
+-- ROLLBACK FLIGHT OPERATIONS
+-- ============================================
+
+DROP TABLE IF EXISTS flight_delay CASCADE;
+DROP TABLE IF EXISTS flight_segment CASCADE;
+DROP TABLE IF EXISTS flight CASCADE;
+DROP TABLE IF EXISTS delay_reason_type CASCADE;
+DROP TABLE IF EXISTS flight_status CASCADE;

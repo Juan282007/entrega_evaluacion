@@ -1,0 +1,9 @@
+-- ============================================
+-- ROLLBACK PAYMENT
+-- ============================================
+
+DROP TABLE IF EXISTS refund CASCADE;
+DROP TABLE IF EXISTS payment_transaction CASCADE;
+DROP TABLE IF EXISTS payment CASCADE;
+DROP TABLE IF EXISTS payment_method CASCADE;
+DROP TABLE IF EXISTS payment_status CASCADE;
