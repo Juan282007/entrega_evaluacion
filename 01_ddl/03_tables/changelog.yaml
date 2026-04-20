@@ -190,3 +190,19 @@ databaseChangeLog:
             path: ../../../05_rollbacks/01_ddl/03_tables/rollback-tables-billing.sql
             relativeToChangelogFile: true
             stripComments: false
+
+  - changeSet:
+      id: 766d5071-8e80-4ceb-858e-e70d87737c9c
+      author: Juan282007
+      labels: "HU-08-dev,ddl,tables,notifications"
+      comment: Creates notifications and communications tables.
+      changes:
+        - sqlFile:
+            path: create-tables-notifications.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/01_ddl/03_tables/rollback-tables-notifications.sql
+            relativeToChangelogFile: true
+            stripComments: false
