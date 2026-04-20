@@ -126,3 +126,66 @@ Definir el orden de inserción de datos de prueba respetando las dependencias en
 - Validar que las restricciones CHECK se cumplan
 - Confirmar que las claves foráneas apunten a registros existentes
 - Verificar unicidad en campos con restricción UNIQUE
+
+## Queries de Validación
+
+### Verificar registros insertados por dominio
+```sql
+SELECT 'time_zone' as tabla, COUNT(*) as registros FROM time_zone
+UNION ALL SELECT 'continent', COUNT(*) FROM continent
+UNION ALL SELECT 'country', COUNT(*) FROM country
+UNION ALL SELECT 'airline', COUNT(*) FROM airline
+UNION ALL SELECT 'person', COUNT(*) FROM person
+UNION ALL SELECT 'user_account', COUNT(*) FROM user_account
+UNION ALL SELECT 'customer', COUNT(*) FROM customer
+UNION ALL SELECT 'airport', COUNT(*) FROM airport
+UNION ALL SELECT 'aircraft', COUNT(*) FROM aircraft
+UNION ALL SELECT 'flight', COUNT(*) FROM flight
+UNION ALL SELECT 'reservation', COUNT(*) FROM reservation
+UNION ALL SELECT 'ticket', COUNT(*) FROM ticket
+UNION ALL SELECT 'check_in', COUNT(*) FROM check_in
+UNION ALL SELECT 'payment', COUNT(*) FROM payment
+UNION ALL SELECT 'invoice', COUNT(*) FROM invoice;
+```
+
+### Verificar integridad referencial
+```sql
+-- Verificar que todos los tickets tienen segmento asignado
+SELECT t.ticket_number, ts.segment_sequence_no
+FROM ticket t
+LEFT JOIN ticket_segment ts ON t.ticket_id = ts.ticket_id
+ORDER BY t.ticket_number;
+
+-- Verificar que todos los check-in tienen boarding pass
+SELECT ci.check_in_id, bp.boarding_pass_code
+FROM check_in ci
+LEFT JOIN boarding_pass bp ON ci.check_in_id = bp.check_in_id;
+
+-- Verificar que todos los pagos tienen transacción
+SELECT p.payment_reference, pt.transaction_reference
+FROM payment p
+LEFT JOIN payment_transaction pt ON p.payment_id = pt.payment_id;
+
+-- Verificar roles asignados a usuarios
+SELECT ua.username, sr.role_name
+FROM user_account ua
+JOIN user_role ur ON ua.user_account_id = ur.user_account_id
+JOIN security_role sr ON ur.security_role_id = sr.security_role_id
+ORDER BY ua.username;
+```
+
+### Verificar restricciones CHECK
+```sql
+-- Verificar géneros válidos
+SELECT person_id, gender_code FROM person
+WHERE gender_code NOT IN ('F', 'M', 'X');
+
+-- Verificar tipos de pasajero válidos
+SELECT reservation_passenger_id, passenger_type FROM reservation_passenger
+WHERE passenger_type NOT IN ('ADULT', 'CHILD', 'INFANT');
+
+-- Verificar estados de pago válidos
+SELECT payment_id, payment_reference FROM payment p
+JOIN payment_status ps ON p.payment_status_id = ps.payment_status_id
+WHERE ps.status_code NOT IN ('PENDING', 'AUTHORIZED', 'CAPTURED', 'FAILED', 'REFUNDED');
+```
