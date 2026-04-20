@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1a2b3c4d-0003-4a1b-8c1d-000000000001
+      author: admin
+      labels: "HU-04-dev,dcl,roles"
+      comment: Creates roles and grants permissions by domain.
+      changes:
+        - sqlFile:
+            path: create-roles.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/03_dcl/00_roles/rollback-roles.sql
+            relativeToChangelogFile: true
+            stripComments: false

@@ -1,0 +1,208 @@
+databaseChangeLog:
+  - changeSet:
+      id: 745dac27-9898-460f-a0ee-a4e1fe534621
+      author: Juan282007
+      labels: "HU-02-dev,ddl,tables,geography"
+      comment: Creates geography and reference data tables.
+      changes:
+        - sqlFile:
+            path: create-tables-geography.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/01_ddl/03_tables/rollback-tables-geography.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: c08966b9-2e6a-4962-b39a-adb457ce7805
+      author: Juan282007
+      labels: "HU-02-dev,ddl,tables,airline"
+      comment: Creates airline tables.
+      changes:
+        - sqlFile:
+            path: create-tables-airline.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/01_ddl/03_tables/rollback-tables-airline.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: c10da615-e7b3-4af1-bd25-a1ac424085d3
+      author: Juan282007
+      labels: "HU-02-dev,ddl,tables,identity"
+      comment: Creates identity tables.
+      changes:
+        - sqlFile:
+            path: create-tables-identity.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/01_ddl/03_tables/rollback-tables-identity.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: cc740f56-acf4-4165-be6c-18b8dc0ca3ac
+      author: Juan282007
+      labels: "HU-02-dev,ddl,tables,security"
+      comment: Creates security tables.
+      changes:
+        - sqlFile:
+            path: create-tables-security.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/01_ddl/03_tables/rollback-tables-security.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: 964a6be4-6884-4b65-b53b-5a87c13f66f6
+      author: Juan282007
+      labels: "HU-02-dev,ddl,tables,customer"
+      comment: Creates customer and loyalty tables.
+      changes:
+        - sqlFile:
+            path: create-tables-customer.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/01_ddl/03_tables/rollback-tables-customer.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: 4dbdc149-f8ba-45c3-8155-4fc266adc051
+      author: Juan282007
+      labels: "HU-02-dev,ddl,tables,airport"
+      comment: Creates airport tables.
+      changes:
+        - sqlFile:
+            path: create-tables-airport.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/01_ddl/03_tables/rollback-tables-airport.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: 83fc0f3a-2444-4623-8cf9-bd304dc5e26b
+      author: Juan282007
+      labels: "HU-02-dev,ddl,tables,aircraft"
+      comment: Creates aircraft tables.
+      changes:
+        - sqlFile:
+            path: create-tables-aircraft.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/01_ddl/03_tables/rollback-tables-aircraft.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: 64dba0e9-64ae-4767-b18e-68f49420ba08
+      author: Juan282007
+      labels: "HU-02-dev,ddl,tables,flight"
+      comment: Creates flight operations tables.
+      changes:
+        - sqlFile:
+            path: create-tables-flight.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/01_ddl/03_tables/rollback-tables-flight.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: 40982b34-8cac-4933-8539-c6e009116349
+      author: Juan282007
+      labels: "HU-02-dev,ddl,tables,sales"
+      comment: Creates sales and reservation tables.
+      changes:
+        - sqlFile:
+            path: create-tables-sales.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/01_ddl/03_tables/rollback-tables-sales.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: bb9ffef4-0623-44d4-94e5-cbc5ff766421
+      author: Juan282007
+      labels: "HU-02-dev,ddl,tables,boarding"
+      comment: Creates boarding tables.
+      changes:
+        - sqlFile:
+            path: create-tables-boarding.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/01_ddl/03_tables/rollback-tables-boarding.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: e3ddff1d-a0b3-4453-a383-676cb911017a
+      author: Juan282007
+      labels: "HU-02-dev,ddl,tables,payment"
+      comment: Creates payment tables.
+      changes:
+        - sqlFile:
+            path: create-tables-payment.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/01_ddl/03_tables/rollback-tables-payment.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: c83339f3-41d9-4688-b76b-ac43e6c9107f
+      author: Juan282007
+      labels: "HU-02-dev,ddl,tables,billing"
+      comment: Creates billing tables.
+      changes:
+        - sqlFile:
+            path: create-tables-billing.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/01_ddl/03_tables/rollback-tables-billing.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: 766d5071-8e80-4ceb-858e-e70d87737c9c
+      author: Juan282007
+      labels: "HU-08-dev,ddl,tables,notifications"
+      comment: Creates notifications and communications tables.
+      changes:
+        - sqlFile:
+            path: create-tables-notifications.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/01_ddl/03_tables/rollback-tables-notifications.sql
+            relativeToChangelogFile: true
+            stripComments: false

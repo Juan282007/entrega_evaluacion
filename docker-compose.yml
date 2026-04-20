@@ -1,0 +1,21 @@
+services:
+  liquibase:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+    container_name: prueba_liquibase
+    env_file:
+      - .env
+    volumes:
+      - .:/liquibase/changelog
+    command: >
+      --driver=org.postgresql.Driver
+      --url=jdbc:postgresql://host.docker.internal:5435/${POSTGRES_DB}
+      --username=${POSTGRES_USER}
+      --password=${POSTGRES_PASSWORD}
+      --changeLogFile=changelog-master.yaml
+      --contexts=01_ddl,02_dml,03_dcl,04_tcl
+      update
+
+volumes:
+  postgres_data:
