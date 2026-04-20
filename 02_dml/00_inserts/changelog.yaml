@@ -46,3 +46,180 @@ databaseChangeLog:
             path: ../../../05_rollbacks/02_dml/00_inserts/rollback-insert-role-permissions.sql
             relativeToChangelogFile: true
             stripComments: false
+
+  - changeSet:
+      id: c5d91a99-067a-4035-aa4d-61e68de749af
+      author: Juan282007
+      labels: "HU-05-dev,dml,data,geography"
+      comment: Inserts test data for geography domain.
+      changes:
+        - sqlFile:
+            path: insert-data-geography.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/02_dml/00_inserts/rollback-data-geography.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: d224b375-73e7-48b0-a3e5-2d0dace8c82b
+      author: Juan282007
+      labels: "HU-05-dev,dml,data,airline"
+      comment: Inserts test data for airline domain.
+      changes:
+        - sqlFile:
+            path: insert-data-airline.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/02_dml/00_inserts/rollback-data-airline.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: 5a8a2bad-98c5-4898-93f8-57fcc3403ae4
+      author: Juan282007
+      labels: "HU-05-dev,dml,data,identity"
+      comment: Inserts test data for identity domain.
+      changes:
+        - sqlFile:
+            path: insert-data-identity.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/02_dml/00_inserts/rollback-data-identity.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: 2e92bd6e-46cb-4e3c-889d-1f8c128b67e8
+      author: Juan282007
+      labels: "HU-05-dev,dml,data,security"
+      comment: Inserts test data for security domain.
+      changes:
+        - sqlFile:
+            path: insert-data-security.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/02_dml/00_inserts/rollback-data-security.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: 62798b40-7448-463f-87bc-11511fc16c35
+      author: Juan282007
+      labels: "HU-05-dev,dml,data,customer"
+      comment: Inserts test data for customer domain.
+      changes:
+        - sqlFile:
+            path: insert-data-customer.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/02_dml/00_inserts/rollback-data-customer.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: e6acefc6-9806-4f81-9a1f-083ba9ffa292
+      author: Juan282007
+      labels: "HU-05-dev,dml,data,airport"
+      comment: Inserts test data for airport domain.
+      changes:
+        - sqlFile:
+            path: insert-data-airport.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/02_dml/00_inserts/rollback-data-airport.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: b9501ce5-0ae1-46f3-87c0-5a6a3b17fd32
+      author: Juan282007
+      labels: "HU-05-dev,dml,data,aircraft"
+      comment: Inserts test data for aircraft domain.
+      changes:
+        - sqlFile:
+            path: insert-data-aircraft.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/02_dml/00_inserts/rollback-data-aircraft.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: d228d633-bc47-4d3c-b808-813282098b3c
+      author: Juan282007
+      labels: "HU-05-dev,dml,data,flight"
+      comment: Inserts test data for flight domain.
+      changes:
+        - sqlFile:
+            path: insert-data-flight.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/02_dml/00_inserts/rollback-data-flight.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: b4652eb7-bcf6-409e-af71-499bebbcae42
+      author: Juan282007
+      labels: "HU-05-dev,dml,data,sales"
+      comment: Inserts test data for sales domain.
+      changes:
+        - sqlFile:
+            path: insert-data-sales.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/02_dml/00_inserts/rollback-data-sales.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: fcef4336-1cfa-4f7f-902a-15725a949f4c
+      author: Juan282007
+      labels: "HU-05-dev,dml,data,boarding"
+      comment: Inserts test data for boarding domain.
+      changes:
+        - sqlFile:
+            path: insert-data-boarding.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/02_dml/00_inserts/rollback-data-boarding.sql
+            relativeToChangelogFile: true
+            stripComments: false
+
+  - changeSet:
+      id: e94e7b45-04bc-45b3-a721-47f353b4488d
+      author: Juan282007
+      labels: "HU-05-dev,dml,data,payment"
+      comment: Inserts test data for payment domain.
+      changes:
+        - sqlFile:
+            path: insert-data-payment.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      rollback:
+        - sqlFile:
+            path: ../../../05_rollbacks/02_dml/00_inserts/rollback-data-payment.sql
+            relativeToChangelogFile: true
+            stripComments: false
+      
